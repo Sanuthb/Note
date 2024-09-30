@@ -8,9 +8,16 @@ import save_edit_data from "../Hooks/Save_edit_data";
 const Edit_note = () => {
   const [editnotetitle, seteditnotetitle] = useState("");
   const [editnotedesc, seteditnotedesc] = useState("");
+  const [editnotetime, seteditnotetime] = useState<string | undefined>();
+  const [editnotedate,seteditnotedate] = useState<string|undefined>();
 
   const { id } = useParams<{ id: string }>();
-  const [note, setNote] = useState<{ title: string; description: string } | null>(null);
+  const [note, setNote] = useState<{
+    title: string;
+    description: string;
+    date: string | undefined;
+    time: string | undefined;
+  } | null>(null);
 
   useEffect(() => {
     if (id) {
@@ -21,13 +28,15 @@ const Edit_note = () => {
 
   useEffect(() => {
     if (note) {
+      console.log(note)
       seteditnotetitle(note.title);
       seteditnotedesc(note.description);
+      seteditnotetime(note.time)
+      seteditnotedate(note.date)
     }
   }, [note]);
-
-  function savechanges(){
-    save_edit_data(note,editnotetitle,editnotedesc,id)
+  function savechanges() {
+    save_edit_data(note, editnotetitle, editnotedesc, id);
   }
 
   return (
@@ -57,6 +66,9 @@ const Edit_note = () => {
                 seteditnotetitle(e.target.value);
               }}
             />
+          </div>
+          <div>
+            <p>{editnotedate}{" "}{editnotetime}</p>
           </div>
           <div className="mb-4 mt-6">
             <textarea

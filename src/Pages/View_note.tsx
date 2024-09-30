@@ -10,10 +10,16 @@ import { useNavigate } from "react-router-dom";
 const View_note = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
+  const [notetitle, setnotetitle] = useState("");
+  const [notedesc, setnotedesc] = useState("");
+  const [notetime, setnotetime] = useState<string | undefined>();
+  const [notedate,setnotedate] = useState<string|undefined>();
   const [note, setNote] = useState<{
     title: string;
     description: string;
-  } | null>(null);
+    time:string;
+    date:string;
+  } | null>();
 
   useEffect(() => {
     if (id) {
@@ -21,6 +27,16 @@ const View_note = () => {
       setNote(fetchedNote);
     }
   }, [id]);
+
+  useEffect(() => {
+    if (note) {
+      console.log(note)
+      setnotetitle(note.title);
+      setnotedesc(note.description);
+      setnotetime(note.time)
+      setnotedate(note.date)
+    }
+  }, [note]);
 
   function deletenote () {
     delete_note(id)
@@ -49,8 +65,9 @@ const View_note = () => {
       </div>
       {note ? (
         <div className="p-5">
-          <h2 className="text-3xl">{note.title}</h2>
-          <p className="text-xl mt-2">{note.description}</p>
+          <h2 className="text-3xl mb-3">{notetitle}</h2>
+          <p>{notedate}{" "}{notetime}</p>
+          <p className="text-xl mt-2">{notedesc}</p>
         </div>
       ) : (
         <p>No note found.</p>

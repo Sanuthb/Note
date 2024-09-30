@@ -1,23 +1,28 @@
 import { FaArrowLeft } from "react-icons/fa6";
 import { MdOutlineDone } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Date_comp from "../Comp/Date_comp";
 import { useState } from "react";
 import add_data_localstorage from "../Hooks/Add_data_localstorage";
+import dateandtime from "../Hooks/Dateandtime";
 
 const Add_note = () => {
   const [notetitle, setnotetitle] = useState("");
   const [notedesc, setnotedesc] = useState("");
 
+  const {currentdate,time} = dateandtime()
+
   const note_data = {
     title: notetitle,
     description: notedesc,
+    date: currentdate,
+    time:time
   };
-
+  const navigate = useNavigate()
   function adddatatostorage() {
-    add_data_localstorage(note_data); 
-    setnotetitle(""); 
-    setnotedesc("");
+    add_data_localstorage(note_data);
+    window.alert("Note Added") 
+    navigate("/")    
   }
 
   return (

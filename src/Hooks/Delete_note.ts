@@ -1,6 +1,8 @@
 interface Note {
     title: string;
     description: string;
+    date:string | undefined;
+    time:string | undefined;
 }
 
 function delete_note(id: string | undefined) {

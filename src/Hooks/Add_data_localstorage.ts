@@ -1,6 +1,9 @@
 interface NoteData {
     title: string;
     description: string;
+    date:string | undefined;
+    time:string | undefined;
+
   }
   
   function add_data_localstorage(note_data: NoteData) {

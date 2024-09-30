@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 interface NoteData {
   title: string;
   description: string;
+  date:string | undefined;
+  time:string | undefined;
 }
 
 const Notes_comp = () => {
@@ -24,7 +26,7 @@ const Notes_comp = () => {
   ];
 
   return (
-    <div className="h-full min-h-screen grid grid-cols-2 gap-5">
+    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-4">
       {storeddata.length > 0 ? (
         storeddata.map((note, index) => {
           const backgroundColor =
@@ -34,15 +36,16 @@ const Notes_comp = () => {
             <Link
              to={`/view_notes/${index}`}
               key={index}
-              className="p-4 w-[fit-content] h-[fit-content] rounded-md text-black"
+              className="p-4 h-[fit-content] w-[100%] rounded-md  text-black flex items-baseline justify-center flex-col"
               style={{ backgroundColor }}
             >
-              <h1 className="text-xl font-medium">{note.title}</h1>
-              <p className="text-base mt-1">
-                {note.description.length > 100
+              <h1 className="text-xl font-medium text-wrap">{note.title}</h1>
+              <p className="text-base mt-1 w-fit">
+                {note.description.length > 50
                   ? note.description.slice(0, 10) + "..."
                   : note.description}
               </p>
+              <p className="text-right w-full text-md font-medium text-white">{note.date}</p>
             </Link>
           );
         })
